@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd backend && uvicorn *)",
+      "Bash(cd frontend && npm run *)",
+      "Bash(cd backend && pytest *)",
+      "Bash(pip install *)",
+      "Bash(npm install *)",
+      "Bash(curl -X POST http://localhost:8000/*)",
+      "Bash(git status)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git diff *)",
+      "Bash(cat *)",
+      "Bash(ls *)",
+      "Read(**)",
+      "Write(backend/**)",
+      "Write(frontend/**)",
+      "Write(docs/argument-patterns.md)",
+      "Write(CLAUDE.md)",
+      "Write(.claude/**)",
+      "Write(.env.example)",
+      "Write(.gitignore)",
+      "Write(README.md)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(sudo *)",
+      "Write(.env)",
+      "Write(backend/app/models/graph.py)",
+      "Write(docs/DESIGN.md)",
+      "Write(docs/source-material/**)",
+      "Write(docs/argument-patterns.md)"
+    ]
+  },
+  "env": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  }
+}
