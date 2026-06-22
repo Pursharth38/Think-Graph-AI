@@ -1,0 +1,76 @@
+{
+  "_comment": "Type B — Two Premises + Causal Gap (Q26 / Brazil futsal). Counter-premise (poverty theory) is present and undermines. Implicit causal transfer assumptions A1+A2.",
+  "source_text": "Why is it that Brazil has produced such successful soccer teams, and so many brilliant players? One theory is that it is because Brazil has a lot of very poor areas. But a better explanation is the unique popularity in Brazil of a game called futsal. Futsal is played with a smaller ball that is more difficult to control, and in smaller spaces where people have to think faster and be more accurate with their passing. As former soccer superstar Ronaldinho said, 'When you come to play soccer, it's easy if you've come from futsal.'",
+  "graph": {
+    "premises": [
+      {
+        "id": "P1",
+        "text": "Futsal is uniquely popular in Brazil.",
+        "type": "premise",
+        "span": [166, 238],
+        "implicit": false
+      },
+      {
+        "id": "P2",
+        "text": "Futsal uses a harder-to-control ball in tighter spaces, requiring faster thinking and more precise passing.",
+        "type": "premise",
+        "span": [239, 414],
+        "implicit": false
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "A1",
+        "text": "Skills developed through futsal — precise ball control in tight spaces and fast decision-making — transfer directly to and improve soccer performance.",
+        "type": "assumption",
+        "span": null,
+        "implicit": true
+      },
+      {
+        "id": "A2",
+        "text": "The poverty theory fails to explain Brazil's success because other equally poor countries have not produced the same elite soccer results.",
+        "type": "assumption",
+        "span": null,
+        "implicit": true
+      }
+    ],
+    "conclusion": {
+      "id": "C1",
+      "text": "Futsal's unique popularity in Brazil best explains why Brazil produces elite soccer players.",
+      "type": "conclusion",
+      "span": [157, 167],
+      "implicit": false
+    },
+    "sub_conclusions": [],
+    "counter_premises": [
+      {
+        "id": "CP1",
+        "text": "One theory holds that Brazil's soccer success is explained by its having many very poor areas.",
+        "type": "counter_premise",
+        "span": [93, 155],
+        "implicit": false
+      }
+    ],
+    "edges": [
+      { "from": ["P1", "P2", "A1"], "to_node": "C1", "edge_type": "supports" },
+      { "from": "CP1",              "to_node": "C1", "edge_type": "undermines" },
+      { "from": "A2",               "to_node": "CP1","edge_type": "undermines" }
+    ],
+    "fallacies": [],
+    "argument_type": "two_premise_causal_gap",
+    "discourse_markers": [
+      {
+        "marker": "But a better explanation is",
+        "span": [157, 183],
+        "assigned_role": "pivot_to_conclusion",
+        "is_misleading": true
+      },
+      {
+        "marker": "because",
+        "span": [106, 113],
+        "assigned_role": "premise_marker",
+        "is_misleading": false
+      }
+    ]
+  }
+}

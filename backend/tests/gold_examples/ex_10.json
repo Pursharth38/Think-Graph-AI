@@ -1,0 +1,95 @@
+{
+  "_comment": "Type E — Constraint Satisfaction (Q12-style / five-club grid puzzle). No fallacy. No implicit assumptions. Every edge is deductive. Demonstrates pure deductive closure structure.",
+  "source_text": "The school offers five after-school clubs: Robotics, Chess, Drama, Swimming, and Art. Each student must join exactly two clubs. The following rules apply: Any student who joins Robotics must also join Chess. No student may join both Drama and Swimming. Any student who joins Art must NOT join Robotics. Maria has joined Drama. She has not joined Chess.",
+  "graph": {
+    "premises": [
+      {
+        "id": "P1",
+        "text": "Any student who joins Robotics must also join Chess. (Robotics → Chess)",
+        "type": "premise",
+        "span": [116, 166],
+        "implicit": false
+      },
+      {
+        "id": "P2",
+        "text": "No student may join both Drama and Swimming. (¬(Drama ∧ Swimming))",
+        "type": "premise",
+        "span": [167, 210],
+        "implicit": false
+      },
+      {
+        "id": "P3",
+        "text": "Any student who joins Art must NOT join Robotics. (Art → ¬Robotics)",
+        "type": "premise",
+        "span": [211, 259],
+        "implicit": false
+      },
+      {
+        "id": "P4",
+        "text": "Maria has joined Drama.",
+        "type": "premise",
+        "span": [260, 283],
+        "implicit": false
+      },
+      {
+        "id": "P5",
+        "text": "Maria has not joined Chess.",
+        "type": "premise",
+        "span": [284, 310],
+        "implicit": false
+      }
+    ],
+    "assumptions": [],
+    "conclusion": {
+      "id": "C1",
+      "text": "Maria cannot have joined Robotics, and her second club must be Art (the only remaining option consistent with all rules).",
+      "type": "conclusion",
+      "span": null,
+      "implicit": false
+    },
+    "sub_conclusions": [
+      {
+        "id": "SC1",
+        "text": "Maria has not joined Robotics. (Contrapositive of P1: ¬Chess → ¬Robotics; Maria has ¬Chess from P5, therefore ¬Robotics.)",
+        "type": "sub_conclusion",
+        "span": null,
+        "implicit": false
+      },
+      {
+        "id": "SC2",
+        "text": "Maria has not joined Swimming. (From P2 and P4: Drama ∧ ¬Swimming; Maria has Drama, so ¬Swimming.)",
+        "type": "sub_conclusion",
+        "span": null,
+        "implicit": false
+      }
+    ],
+    "counter_premises": [],
+    "edges": [
+      { "from": ["P1", "P5"], "to_node": "SC1", "edge_type": "supports" },
+      { "from": ["P2", "P4"], "to_node": "SC2", "edge_type": "supports" },
+      { "from": ["SC1", "SC2", "P4", "P5"], "to_node": "C1", "edge_type": "supports" }
+    ],
+    "fallacies": [],
+    "argument_type": "constraint_satisfaction",
+    "discourse_markers": [
+      {
+        "marker": "must also",
+        "span": [141, 150],
+        "assigned_role": "conditional_consequent",
+        "is_misleading": false
+      },
+      {
+        "marker": "No student may",
+        "span": [167, 181],
+        "assigned_role": "universal_prohibition",
+        "is_misleading": false
+      },
+      {
+        "marker": "must NOT",
+        "span": [238, 246],
+        "assigned_role": "conditional_negation",
+        "is_misleading": false
+      }
+    ]
+  }
+}

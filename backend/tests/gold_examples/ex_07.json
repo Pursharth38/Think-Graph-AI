@@ -1,0 +1,65 @@
+{
+  "_comment": "Type C — Chain Conditional / Affirming the Consequent (Q3-style / theft investigation). Fallacy: affirming_the_consequent. High confidence.",
+  "source_text": "Whoever stole the money from the school office must have had both an opportunity to access the office and a motive for taking the money. Finn had access to the office that afternoon, and he had financial difficulties at the time. Therefore Finn must have stolen the money.",
+  "graph": {
+    "premises": [
+      {
+        "id": "P1",
+        "text": "Whoever stole the money must have had both an opportunity to access the office AND a motive. (Stole → Opportunity ∧ Motive)",
+        "type": "premise",
+        "span": [0, 136],
+        "implicit": false
+      },
+      {
+        "id": "P2",
+        "text": "Finn had access to the office that afternoon (Opportunity).",
+        "type": "premise",
+        "span": [137, 186],
+        "implicit": false
+      },
+      {
+        "id": "P3",
+        "text": "Finn had financial difficulties at the time (Motive).",
+        "type": "premise",
+        "span": [192, 232],
+        "implicit": false
+      }
+    ],
+    "assumptions": [],
+    "conclusion": {
+      "id": "C1",
+      "text": "Finn must have stolen the money.",
+      "type": "conclusion",
+      "span": [243, 275],
+      "implicit": false
+    },
+    "sub_conclusions": [],
+    "counter_premises": [],
+    "edges": [
+      { "from": ["P1", "P2", "P3"], "to_node": "C1", "edge_type": "supports" }
+    ],
+    "fallacies": [
+      {
+        "node_ids": ["P1", "P2", "P3", "C1"],
+        "fallacy_type": "affirming_the_consequent",
+        "explanation": "P1 states that stealing is a sufficient condition for having opportunity and motive (Stole → Opp ∧ Motive). P2 and P3 establish that Finn has opportunity and motive. The conclusion infers that Finn stole (Opp ∧ Motive → Stole). This reverses the conditional — affirming the consequent — which is invalid. Many people could have opportunity and motive without being the thief.",
+        "confidence": 0.97
+      }
+    ],
+    "argument_type": "chain_conditional",
+    "discourse_markers": [
+      {
+        "marker": "Therefore",
+        "span": [234, 243],
+        "assigned_role": "conclusion_marker",
+        "is_misleading": false
+      },
+      {
+        "marker": "whoever",
+        "span": [0, 7],
+        "assigned_role": "universal_quantifier",
+        "is_misleading": false
+      }
+    ]
+  }
+}
