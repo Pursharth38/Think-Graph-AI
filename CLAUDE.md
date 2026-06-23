@@ -65,7 +65,7 @@ cd backend && pytest tests/test_extraction.py -v
 ## Gemini API
 
 - `GEMINI_API_KEY` comes from `.env` (via `os.environ`) — never hardcode it
-- Model: `gemini-1.5-flash` only
+- Model: `gemini-2.5-flash` only
 - Always set `responseMimeType: 'application/json'` in `generation_config`
 - System prompt passed as `system_instruction` — cached across the session
 - Retry cap: 2 retries. On failure → degraded response (premises/conclusion only, no fallacy layer)
