@@ -22,10 +22,17 @@ export function useExtraction() {
   const latestRequest = useRef(0);
   const inFlight = useRef<AbortController | null>(null);
 
+  // Claim "latest" and cancel any in-flight live call. Returns the new request id;
+  // a stale response whose id !== latestRequest.current must not commit to state.
+  const claimLatest = useCallback(() => {
+    inFlight.current?.abort();
+    inFlight.current = null;
+    return (latestRequest.current += 1);
+  }, []);
+
   /** Live call to POST /extract. */
   const analyse = useCallback(async (sourceText: string) => {
-    const requestId = (latestRequest.current += 1);
-    inFlight.current?.abort();
+    const requestId = claimLatest();
     const controller = new AbortController();
     inFlight.current = controller;
 
@@ -59,29 +66,27 @@ export function useExtraction() {
         error: `Could not reach the analysis service. ${message}. Is the backend running on ${API_URL}? You can still explore the example arguments.`,
       });
     }
-  }, []);
+  }, [claimLatest]);
 
   /** Load a gold fixture (AnnotatedArgument) without hitting the backend. */
-  const loadFixture = useCallback((annotated: AnnotatedArgument) => {
-    // Claim latest + cancel any in-flight live call so its late response can't win.
-    latestRequest.current += 1;
-    inFlight.current?.abort();
-    inFlight.current = null;
-    const response: ExtractResponse = {
-      source_text: annotated.source_text,
-      graph: annotated.graph,
-      react_flow: buildReactFlow(annotated.graph),
-      degraded: false,
-    };
-    setState({ result: response, loading: false, error: null });
-  }, []);
+  const loadFixture = useCallback(
+    (annotated: AnnotatedArgument) => {
+      claimLatest(); // a late live response can't clobber the fixture we're showing
+      const response: ExtractResponse = {
+        source_text: annotated.source_text,
+        graph: annotated.graph,
+        react_flow: buildReactFlow(annotated.graph),
+        degraded: false,
+      };
+      setState({ result: response, loading: false, error: null });
+    },
+    [claimLatest],
+  );
 
   const reset = useCallback(() => {
-    latestRequest.current += 1;
-    inFlight.current?.abort();
-    inFlight.current = null;
+    claimLatest();
     setState(INITIAL);
-  }, []);
+  }, [claimLatest]);
 
   return { ...state, analyse, loadFixture, reset };
 }

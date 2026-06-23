@@ -47,6 +47,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+from functools import lru_cache
 from typing import Any, Optional
 
 from app.models.graph import (
@@ -291,8 +292,10 @@ SYSTEM_INSTRUCTION = (
 )
 
 
-def build_prompt(source_text: str, graph: ArgumentGraph) -> str:
-    """Assemble the full few-shot user prompt (examples + the real argument)."""
+@lru_cache(maxsize=1)
+def _few_shot_prefix() -> str:
+    """The static worked-example bank — identical for every request, so build it
+    once and reuse. (The examples are constants in data.fallacy_examples.)"""
     parts: list[str] = [
         "Here are worked examples. Study the INPUT and the correct OUTPUT.\n"
     ]
@@ -320,12 +323,20 @@ def build_prompt(source_text: str, graph: ArgumentGraph) -> str:
     parts.append("OUTPUT:")
     parts.append(json.dumps({"fallacies": NEGATIVE_EXAMPLE["fallacies"]}, ensure_ascii=False))
     parts.append("")
-
-    parts.append("### Now classify this argument")
-    parts.append("INPUT:")
-    parts.append(json.dumps(_graph_to_prompt_input(source_text, graph), ensure_ascii=False))
-    parts.append("OUTPUT:")
     return "\n".join(parts)
+
+
+def build_prompt(source_text: str, graph: ArgumentGraph) -> str:
+    """Assemble the full few-shot user prompt (cached examples + the real argument)."""
+    dynamic = "\n".join(
+        [
+            "### Now classify this argument",
+            "INPUT:",
+            json.dumps(_graph_to_prompt_input(source_text, graph), ensure_ascii=False),
+            "OUTPUT:",
+        ]
+    )
+    return _few_shot_prefix() + "\n" + dynamic
 
 
 def _graph_to_prompt_input(source_text: str, graph: ArgumentGraph) -> dict[str, Any]:

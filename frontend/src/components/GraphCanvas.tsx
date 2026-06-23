@@ -28,6 +28,8 @@ const EDGE_STYLE: Record<EdgeType, { stroke: string; dash?: string }> = {
   undermines: { stroke: '#e8b8c4', dash: '2 4' },
 };
 
+const FIT_VIEW_OPTIONS = { padding: 0.2, duration: 400 };
+
 /**
  * Layered re-layout that centres each row over the widest row for nicer spacing.
  * Rows come from the node's semantic role (LAYER_BY_TYPE), not the incoming y —
@@ -80,15 +82,11 @@ function GraphCanvasInner({
   const [revealed, setRevealed] = useState(0);
   const [showEdges, setShowEdges] = useState(false);
 
-  const positioned = useMemo(
+  // layout() already emits rows top-to-bottom (premises → conclusion), so this is
+  // also the reveal order — no separate sort needed.
+  const ordered = useMemo(
     () => (payload ? layout(payload.nodes) : []),
     [payload],
-  );
-
-  // Order nodes top-to-bottom so premises appear before the conclusion.
-  const ordered = useMemo(
-    () => [...positioned].sort((a, b) => a.position.y - b.position.y),
-    [positioned],
   );
 
   useEffect(() => {
@@ -109,9 +107,7 @@ function GraphCanvasInner({
             // Guaranteed final fit: by now every node (including the last-revealed
             // one) is in the DOM and measured, so fitView sees the complete graph
             // and zooms to fit it rather than clamping to maxZoom on a partial set.
-            timers.push(
-              window.setTimeout(() => fitView({ padding: 0.2, duration: 400 }), 260),
-            );
+            timers.push(window.setTimeout(() => fitView(FIT_VIEW_OPTIONS), 260));
           }, 200),
         );
       }
@@ -127,7 +123,7 @@ function GraphCanvasInner({
   // viewport at maxZoom and pushed the graph off-canvas.
   useEffect(() => {
     if (!nodesInitialized || revealed === 0) return;
-    fitView({ padding: 0.2, duration: 400 });
+    fitView(FIT_VIEW_OPTIONS);
   }, [nodesInitialized, revealed, showEdges, fitView]);
 
   const highlight = useMemo(() => new Set(highlightNodeIds ?? []), [highlightNodeIds]);
