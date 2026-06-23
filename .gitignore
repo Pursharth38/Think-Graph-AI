@@ -25,6 +25,10 @@ frontend/.vite/
 # Claude Code local overrides (never commit personal settings)
 .claude/settings.local.json
 
+# Word documents / temp lock files (design drafts kept out of the repo)
+*.docx
+~$*.docx
+
 # OS
 .DS_Store
 Thumbs.db
