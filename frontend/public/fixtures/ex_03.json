@@ -1,0 +1,52 @@
+{
+  "_comment": "Type C — Chain Conditional / Denying the Antecedent (Q23 / Spring-Autumn concert). Fallacy: denying_the_antecedent.",
+  "source_text": "Jarrah's music teacher has promised that any students who did not have a chance to perform in the Spring concert will definitely be chosen to play in the Autumn concert. Well, I did perform in the Spring concert. So that means I definitely won't be chosen for Autumn.",
+  "graph": {
+    "premises": [
+      {
+        "id": "P1",
+        "text": "Any student who did NOT perform in the Spring concert will definitely be chosen for the Autumn concert. (Rule: ¬Spring → Autumn)",
+        "type": "premise",
+        "span": [0, 168],
+        "implicit": false
+      },
+      {
+        "id": "P2",
+        "text": "Jarrah did perform in the Spring concert.",
+        "type": "premise",
+        "span": [170, 211],
+        "implicit": false
+      }
+    ],
+    "assumptions": [],
+    "conclusion": {
+      "id": "C1",
+      "text": "Jarrah will definitely NOT be chosen for the Autumn concert.",
+      "type": "conclusion",
+      "span": [213, 265],
+      "implicit": false
+    },
+    "sub_conclusions": [],
+    "counter_premises": [],
+    "edges": [
+      { "from": ["P1", "P2"], "to_node": "C1", "edge_type": "supports" }
+    ],
+    "fallacies": [
+      {
+        "node_ids": ["P1", "P2", "C1"],
+        "fallacy_type": "denying_the_antecedent",
+        "explanation": "P1 states only a one-directional rule: ¬Spring → Autumn. Jarrah negates the antecedent (he IS in Spring, i.e. ¬(¬Spring)) and concludes ¬Autumn. This is invalid. The rule says nothing about what happens to students who DID perform in Spring — they may still be chosen for Autumn.",
+        "confidence": 0.98
+      }
+    ],
+    "argument_type": "chain_conditional",
+    "discourse_markers": [
+      {
+        "marker": "So that means",
+        "span": [213, 226],
+        "assigned_role": "conclusion_marker",
+        "is_misleading": false
+      }
+    ]
+  }
+}

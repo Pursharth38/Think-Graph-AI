@@ -1,0 +1,110 @@
+{
+  "_comment": "Type D — Counter-Premise Pivot (raising drinking age). Two live targets documented in argument-patterns.md docx Q14. Conclusion anchored to the pivot claim. Implicit normative gap assumption (ought-is bridge).",
+  "source_text": "There are good reasons to raise the minimum drinking age to 21. The brain continues to develop until the mid-twenties, and alcohol disrupts this process, increasing the risk of lasting cognitive harm. However, making the rules stricter could push young people towards illegal and unsupervised drinking, which may actually expose them to greater risks than regulated access would.",
+  "graph": {
+    "premises": [
+      {
+        "id": "P1",
+        "text": "The brain continues to develop until the mid-twenties.",
+        "type": "premise",
+        "span": [
+          65,
+          118
+        ],
+        "implicit": false
+      },
+      {
+        "id": "P2",
+        "text": "Alcohol disrupts brain development, increasing the risk of lasting cognitive harm.",
+        "type": "premise",
+        "span": [
+          123,
+          203
+        ],
+        "implicit": false
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "A1",
+        "text": "Stricter legal rules will not be effectively circumvented, i.e. the law will actually reduce young people's alcohol consumption rather than driving it underground.",
+        "type": "assumption",
+        "span": null,
+        "implicit": true
+      },
+      {
+        "id": "A2",
+        "text": "Protecting developing brains from cognitive harm is a sufficient justification for a legal restriction on personal choice.",
+        "type": "assumption",
+        "span": null,
+        "implicit": true
+      }
+    ],
+    "conclusion": {
+      "id": "C1",
+      "text": "Raising the minimum drinking age to 21 is justified because it protects developing brains.",
+      "type": "conclusion",
+      "span": [
+        0,
+        64
+      ],
+      "implicit": false
+    },
+    "sub_conclusions": [],
+    "counter_premises": [
+      {
+        "id": "CP1",
+        "text": "Making the rules stricter could push young people towards illegal and unsupervised drinking, exposing them to greater risks than regulated access would.",
+        "type": "counter_premise",
+        "span": [
+          214,
+          373
+        ],
+        "implicit": false
+      }
+    ],
+    "edges": [
+      {
+        "from": [
+          "P1",
+          "P2",
+          "A2"
+        ],
+        "to_node": "C1",
+        "edge_type": "supports"
+      },
+      {
+        "from": "A1",
+        "to_node": "C1",
+        "edge_type": "requires"
+      },
+      {
+        "from": "CP1",
+        "to_node": "C1",
+        "edge_type": "undermines"
+      }
+    ],
+    "fallacies": [],
+    "argument_type": "counter_premise_pivot",
+    "discourse_markers": [
+      {
+        "marker": "However",
+        "span": [
+          201,
+          208
+        ],
+        "assigned_role": "pivot_to_counter_premise",
+        "is_misleading": true
+      },
+      {
+        "marker": "and",
+        "span": [
+          119,
+          122
+        ],
+        "assigned_role": "co-premise_link",
+        "is_misleading": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "_comment": "Type A — Single Premise + Implicit Assumption → Conclusion (Q2 / drawing hobby). No fallacy.",
+  "source_text": "You don't need to give up a hobby like drawing just because you want to work in engineering. It's good for you to have hobbies. They help keep you happy and relaxed so you can also study harder.",
+  "graph": {
+    "premises": [
+      {
+        "id": "P1",
+        "text": "It is good for you to have hobbies.",
+        "type": "premise",
+        "span": [93, 127],
+        "implicit": false
+      },
+      {
+        "id": "P2",
+        "text": "Hobbies help keep you happy and relaxed so you can study harder.",
+        "type": "premise",
+        "span": [128, 194],
+        "implicit": false
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "A1",
+        "text": "Being happy and relaxed enables more productive studying, which in turn enables success in an engineering career.",
+        "type": "assumption",
+        "span": null,
+        "implicit": true
+      }
+    ],
+    "conclusion": {
+      "id": "C1",
+      "text": "You do not need to give up a hobby like drawing in order to pursue engineering.",
+      "type": "conclusion",
+      "span": [0, 92],
+      "implicit": false
+    },
+    "sub_conclusions": [],
+    "counter_premises": [],
+    "edges": [
+      { "from": "P1", "to_node": "C1", "edge_type": "supports" },
+      { "from": "P2", "to_node": "A1", "edge_type": "enables" },
+      { "from": "A1", "to_node": "C1", "edge_type": "enables" }
+    ],
+    "fallacies": [],
+    "argument_type": "single_premise_implicit_assumption",
+    "discourse_markers": [
+      {
+        "marker": "so you can also",
+        "span": [165, 180],
+        "assigned_role": "mechanism_link",
+        "is_misleading": false
+      },
+      {
+        "marker": "just because",
+        "span": [47, 59],
+        "assigned_role": "false_dichotomy_pre_emption",
+        "is_misleading": false
+      }
+    ]
+  }
+}

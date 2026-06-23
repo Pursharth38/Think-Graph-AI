@@ -1,0 +1,148 @@
+{
+  "_comment": "Type D — Counter-Premise Pivot (Q20 / falling birth rates). Latent slippery_slope fallacy (confidence 0.65). Two implicit assumptions. Depth-3 nesting → sub_conclusion.",
+  "source_text": "The birth rate in several rich countries is falling, at the same time as older people there are living longer. This will become a problem as time goes on, because there will be far more old people who need looking after, but far fewer younger people to do that. By allowing birth rates to fall so much, these countries are storing up a problem for the future.",
+  "graph": {
+    "premises": [
+      {
+        "id": "P1",
+        "text": "Birth rates in several rich countries are falling.",
+        "type": "premise",
+        "span": [
+          0,
+          51
+        ],
+        "implicit": false
+      },
+      {
+        "id": "P2",
+        "text": "Older people in rich countries are living longer.",
+        "type": "premise",
+        "span": [
+          52,
+          105
+        ],
+        "implicit": false
+      },
+      {
+        "id": "P3",
+        "text": "Far fewer younger people will be available to care for the elderly.",
+        "type": "premise",
+        "span": [
+          196,
+          261
+        ],
+        "implicit": false
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "A1",
+        "text": "The care burden on young people cannot be offset by technology, immigration, or other social mechanisms.",
+        "type": "assumption",
+        "span": null,
+        "implicit": true
+      },
+      {
+        "id": "A2",
+        "text": "Governments bear responsibility for allowing (and therefore could prevent) these demographic trends.",
+        "type": "assumption",
+        "span": null,
+        "implicit": true
+      }
+    ],
+    "conclusion": {
+      "id": "C1",
+      "text": "Rich countries are storing up a serious social problem for the future.",
+      "type": "conclusion",
+      "span": [
+        263,
+        356
+      ],
+      "implicit": false
+    },
+    "sub_conclusions": [
+      {
+        "id": "SC1",
+        "text": "There will be far more old people who need looking after but far fewer young people to provide care.",
+        "type": "sub_conclusion",
+        "span": [
+          107,
+          261
+        ],
+        "implicit": false
+      }
+    ],
+    "counter_premises": [],
+    "edges": [
+      {
+        "from": [
+          "P1",
+          "P2"
+        ],
+        "to_node": "SC1",
+        "edge_type": "supports"
+      },
+      {
+        "from": "P3",
+        "to_node": "SC1",
+        "edge_type": "supports"
+      },
+      {
+        "from": "SC1",
+        "to_node": "C1",
+        "edge_type": "supports"
+      },
+      {
+        "from": "A1",
+        "to_node": "C1",
+        "edge_type": "requires"
+      },
+      {
+        "from": "A2",
+        "to_node": "C1",
+        "edge_type": "requires"
+      }
+    ],
+    "fallacies": [
+      {
+        "node_ids": [
+          "SC1",
+          "C1"
+        ],
+        "fallacy_type": "slippery_slope",
+        "explanation": "The chain P1+P2 → SC1 → inevitable crisis assumes that intermediate steps (fewer carers, no alternative support mechanisms) are inescapable, without examining whether technology, immigration, or policy reform could break the chain.",
+        "confidence": 0.65
+      }
+    ],
+    "argument_type": "two_premise_causal_gap",
+    "discourse_markers": [
+      {
+        "marker": "at the same time as",
+        "span": [
+          53,
+          72
+        ],
+        "assigned_role": "co-premise_link",
+        "is_misleading": false
+      },
+      {
+        "marker": "because",
+        "span": [
+          155,
+          162
+        ],
+        "assigned_role": "premise_marker",
+        "is_misleading": false
+      },
+      {
+        "marker": "but",
+        "span": [
+          221,
+          224
+        ],
+        "assigned_role": "co-premise_link",
+        "is_misleading": true
+      }
+    ]
+  }
+}

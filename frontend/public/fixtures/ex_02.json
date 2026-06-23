@@ -1,0 +1,87 @@
+{
+  "_comment": "Type B — Two Premises + Implicit Causal Link → Conclusion (Q8 / wind farms). No fallacy. Implicit no-storage assumption is the load-bearing gap.",
+  "source_text": "Wind farms will not meet all our energy needs as the demand for electricity grows, because we cannot rely on a source that varies with the weather. We need power 24 hours a day, 7 days a week, which is why the construction of wind turbines, with their uneven output, is not the solution.",
+  "graph": {
+    "premises": [
+      {
+        "id": "P1",
+        "text": "Wind output varies with the weather (intermittent supply).",
+        "type": "premise",
+        "span": [
+          84,
+          146
+        ],
+        "implicit": false
+      },
+      {
+        "id": "P2",
+        "text": "We need electricity 24 hours a day, 7 days a week (constant requirement).",
+        "type": "premise",
+        "span": [
+          148,
+          191
+        ],
+        "implicit": false
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "A1",
+        "text": "There is no practical way to store wind-generated energy to smooth out its intermittency.",
+        "type": "assumption",
+        "span": null,
+        "implicit": true
+      }
+    ],
+    "conclusion": {
+      "id": "C1",
+      "text": "Wind turbines cannot reliably meet our energy needs and are not the solution.",
+      "type": "conclusion",
+      "span": [
+        193,
+        284
+      ],
+      "implicit": false
+    },
+    "sub_conclusions": [],
+    "counter_premises": [],
+    "edges": [
+      {
+        "from": [
+          "P1",
+          "P2",
+          "A1"
+        ],
+        "to_node": "C1",
+        "edge_type": "supports"
+      },
+      {
+        "from": "P1",
+        "to_node": "A1",
+        "edge_type": "requires"
+      }
+    ],
+    "fallacies": [],
+    "argument_type": "two_premise_causal_gap",
+    "discourse_markers": [
+      {
+        "marker": "because",
+        "span": [
+          83,
+          90
+        ],
+        "assigned_role": "premise_marker",
+        "is_misleading": false
+      },
+      {
+        "marker": "which is why",
+        "span": [
+          193,
+          205
+        ],
+        "assigned_role": "conclusion_marker",
+        "is_misleading": false
+      }
+    ]
+  }
+}

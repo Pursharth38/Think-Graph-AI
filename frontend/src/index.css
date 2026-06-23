@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: #f5f5f5; /* canvas */
+    color: #0c0a09; /* ink */
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: 0.16px;
+  }
+}
+
+@layer components {
+  /* Editorial display — EB Garamond, weight 300, NEVER bold. */
+  .display-mega {
+    font-family: 'EB Garamond', 'Times New Roman', serif;
+    font-weight: 300;
+    font-size: 64px;
+    line-height: 1.05;
+    letter-spacing: -1.92px;
+  }
+  .display-lg {
+    font-family: 'EB Garamond', 'Times New Roman', serif;
+    font-weight: 300;
+    font-size: 36px;
+    line-height: 1.17;
+    letter-spacing: -0.36px;
+  }
+  .display-md {
+    font-family: 'EB Garamond', 'Times New Roman', serif;
+    font-weight: 300;
+    font-size: 32px;
+    line-height: 1.13;
+    letter-spacing: -0.32px;
+  }
+  .display-sm {
+    font-family: 'EB Garamond', 'Times New Roman', serif;
+    font-weight: 300;
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  .caption-uppercase {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.96px;
+    text-transform: uppercase;
+  }
+
+  /* Primary ink pill — the only CTA color. */
+  .btn-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 20px;
+    border-radius: 9999px;
+    background-color: #292524;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1;
+    border: none;
+    cursor: pointer;
+    transition: background-color 140ms ease, opacity 140ms ease;
+  }
+  .btn-pill:hover:not(:disabled) {
+    background-color: #0c0a09;
+  }
+  .btn-pill:disabled {
+    background-color: #a8a29e;
+    cursor: not-allowed;
+  }
+
+  .btn-text {
+    background: transparent;
+    border: none;
+    color: #0c0a09;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+  }
+}
+
+/* react-flow overrides to honour the editorial palette */
+.react-flow__attribution {
+  display: none;
+}
+.react-flow__edge-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  fill: #777169;
+}
+.react-flow__edge-textbg {
+  fill: #fafafa;
+}
