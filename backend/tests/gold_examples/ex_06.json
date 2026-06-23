@@ -7,14 +7,20 @@
         "id": "P1",
         "text": "Futsal is uniquely popular in Brazil.",
         "type": "premise",
-        "span": [166, 238],
+        "span": [
+          166,
+          238
+        ],
         "implicit": false
       },
       {
         "id": "P2",
         "text": "Futsal uses a harder-to-control ball in tighter spaces, requiring faster thinking and more precise passing.",
         "type": "premise",
-        "span": [239, 414],
+        "span": [
+          239,
+          414
+        ],
         "implicit": false
       }
     ],
@@ -38,7 +44,10 @@
       "id": "C1",
       "text": "Futsal's unique popularity in Brazil best explains why Brazil produces elite soccer players.",
       "type": "conclusion",
-      "span": [157, 167],
+      "span": [
+        157,
+        167
+      ],
       "implicit": false
     },
     "sub_conclusions": [],
@@ -47,27 +56,52 @@
         "id": "CP1",
         "text": "One theory holds that Brazil's soccer success is explained by its having many very poor areas.",
         "type": "counter_premise",
-        "span": [93, 155],
+        "span": [
+          93,
+          155
+        ],
         "implicit": false
       }
     ],
     "edges": [
-      { "from": ["P1", "P2", "A1"], "to_node": "C1", "edge_type": "supports" },
-      { "from": "CP1",              "to_node": "C1", "edge_type": "undermines" },
-      { "from": "A2",               "to_node": "CP1","edge_type": "undermines" }
+      {
+        "from": [
+          "P1",
+          "P2",
+          "A1"
+        ],
+        "to_node": "C1",
+        "edge_type": "supports"
+      },
+      {
+        "from": "CP1",
+        "to_node": "C1",
+        "edge_type": "undermines"
+      },
+      {
+        "from": "A2",
+        "to_node": "CP1",
+        "edge_type": "undermines"
+      }
     ],
     "fallacies": [],
     "argument_type": "two_premise_causal_gap",
     "discourse_markers": [
       {
         "marker": "But a better explanation is",
-        "span": [157, 183],
+        "span": [
+          166,
+          193
+        ],
         "assigned_role": "pivot_to_conclusion",
         "is_misleading": true
       },
       {
         "marker": "because",
-        "span": [106, 113],
+        "span": [
+          121,
+          128
+        ],
         "assigned_role": "premise_marker",
         "is_misleading": false
       }

@@ -1,3 +1,5 @@
+# LOCKED CONTRACT — see CLAUDE.md and .claude/rules/schema-ownership.md before editing.
+# No agent may modify this file without also updating backend/tests/gold_examples/.
 """
 ThinkGraph AI — Core Data Models (Phase 0 schema, Agent 1)
 ===========================================================
@@ -19,9 +21,9 @@ Reflects findings from docs/argument-patterns.md:
 from __future__ import annotations
 
 from enum import Enum
-from typing import Optional, Union
+from typing import Optional
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 # ---------------------------------------------------------------------------
@@ -104,6 +106,16 @@ class FallacyType(str, Enum):
     tu_quoque = "tu_quoque"
 
 
+class ArgumentType(str, Enum):
+    """Structural type of the argument (argument-patterns.md §1.1)."""
+
+    single_premise_implicit_assumption = "single_premise_implicit_assumption"
+    two_premise_causal_gap = "two_premise_causal_gap"
+    chain_conditional = "chain_conditional"
+    counter_premise_pivot = "counter_premise_pivot"
+    constraint_satisfaction = "constraint_satisfaction"
+
+
 # ---------------------------------------------------------------------------
 # Node
 # ---------------------------------------------------------------------------
@@ -176,17 +188,25 @@ class Edge(BaseModel):
 
     model_config = ConfigDict(populate_by_name=True)
 
-    from_nodes: Union[str, list[str]] = Field(
+    # NOTE: 'from' is a Python keyword. Never construct Edge with Edge(from=...) —
+    # use Edge.model_validate({"from": ..., "to_node": ...}) from JSON, or
+    # Edge(from_nodes=[...], to_node=...) in Python code.
+    from_nodes: list[str] = Field(
         ...,
         alias="from",
         description=(
-            "ID or list of IDs of the source node(s). "
-            "Use a list when multiple premises jointly support the target "
-            "(conjunctive / multi-premise edge). "
-            "Use a string for a single-source edge."
+            "List of source node IDs. Single-source edges use a one-element list. "
+            "A bare string in JSON is coerced to [string] by the validator below."
         ),
-        examples=["P1", ["P1", "P2", "A1"]],
+        examples=[["P1"], ["P1", "P2", "A1"]],
     )
+
+    @field_validator("from_nodes", mode="before")
+    @classmethod
+    def _normalise_from_nodes(cls, v: object) -> list[str]:
+        if isinstance(v, str):
+            return [v]
+        return v  # type: ignore[return-value]
     to_node: str = Field(
         ...,
         description="ID of the target node this edge points to.",
@@ -263,7 +283,10 @@ class DiscourseMarker(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
     marker: str = Field(..., description="The surface string as it appears in the text.")
-    span: tuple[int, int] = Field(..., description="[start, end) offsets in source_text.")
+    span: Optional[tuple[int, int]] = Field(
+        default=None,
+        description="[start, end) offsets in source_text. None when the marker is implied rather than surface-level.",
+    )
     assigned_role: str = Field(
         ...,
         description=(
@@ -370,17 +393,9 @@ class ArgumentGraph(BaseModel):
 
     # --- Transparency metadata -------------------------------------------
 
-    argument_type: Optional[str] = Field(
+    argument_type: Optional[ArgumentType] = Field(
         default=None,
-        description=(
-            "Which structural type from argument-patterns.md §1.1 this "
-            "argument belongs to. One of: "
-            "'single_premise_implicit_assumption', "
-            "'two_premise_causal_gap', "
-            "'chain_conditional', "
-            "'counter_premise_pivot', "
-            "'constraint_satisfaction'."
-        ),
+        description="Structural type from argument-patterns.md §1.1.",
     )
     discourse_markers: list[DiscourseMarker] = Field(
         default_factory=list,
@@ -391,8 +406,7 @@ class ArgumentGraph(BaseModel):
     )
 
     def model_post_init(self, __context: object) -> None:  # noqa: ANN001
-        """Cross-field consistency checks."""
-        # Collect all declared node IDs
+        """Cross-field consistency checks — single pass over all nodes."""
         all_nodes: dict[str, NodeType] = {}
         for node in (
             self.premises
@@ -402,49 +416,30 @@ class ArgumentGraph(BaseModel):
             + [self.conclusion]
         ):
             all_nodes[node.id] = node.type
-
-        # Every node ID referenced in edges must exist
-        for edge in self.edges:
-            sources = (
-                [edge.from_nodes]
-                if isinstance(edge.from_nodes, str)
-                else edge.from_nodes
-            )
-            for src in sources:
-                if src not in all_nodes:
-                    raise ValueError(
-                        f"Edge references unknown source node {src!r}. "
-                        "All node IDs in edges must be declared in premises, "
-                        "assumptions, sub_conclusions, counter_premises, or conclusion."
-                    )
-            if edge.to_node not in all_nodes:
-                raise ValueError(
-                    f"Edge references unknown target node {edge.to_node!r}. "
-                    "All node IDs in edges must be declared."
-                )
-
-        # Every node ID referenced in fallacies must exist
-        for fallacy in self.fallacies:
-            for nid in fallacy.node_ids:
-                if nid not in all_nodes:
-                    raise ValueError(
-                        f"Fallacy references unknown node {nid!r}. "
-                        "All node IDs in fallacies must be declared."
-                    )
-
-        # Implicit nodes must have span=None (also enforced in Node,
-        # but checked here for belt-and-suspenders)
-        for node in (
-            self.premises
-            + self.assumptions
-            + self.sub_conclusions
-            + self.counter_premises
-            + [self.conclusion]
-        ):
             if node.implicit and node.span is not None:
                 raise ValueError(
                     f"Node {node.id!r} is implicit but has span={node.span!r}."
                 )
+
+        for edge in self.edges:
+            for src in edge.from_nodes:  # always list[str] after field_validator
+                if src not in all_nodes:
+                    raise ValueError(
+                        f"Edge references unknown source node {src!r}. "
+                        "Declare it in premises, assumptions, sub_conclusions, "
+                        "counter_premises, or conclusion."
+                    )
+            if edge.to_node not in all_nodes:
+                raise ValueError(
+                    f"Edge references unknown target node {edge.to_node!r}."
+                )
+
+        for fallacy in self.fallacies:
+            for nid in fallacy.node_ids:
+                if nid not in all_nodes:
+                    raise ValueError(
+                        f"Fallacy references unknown node {nid!r}."
+                    )
 
 
 # ---------------------------------------------------------------------------

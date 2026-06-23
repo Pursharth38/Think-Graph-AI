@@ -7,28 +7,40 @@
         "id": "P1",
         "text": "If an applicant has programming knowledge, they only need to pass the mathematics test. (HasKnowledge → OnlyNeedPassMaths)",
         "type": "premise",
-        "span": [46, 131],
+        "span": [
+          46,
+          131
+        ],
         "implicit": false
       },
       {
         "id": "P2",
         "text": "If an applicant has no programming knowledge, they must either achieve an excellent grade in mathematics, or pass both mathematics and chess. (¬HasKnowledge → ExcellentMaths ∨ (PassMaths ∧ PassChess))",
         "type": "premise",
-        "span": [132, 273],
+        "span": [
+          132,
+          273
+        ],
         "implicit": false
       },
       {
         "id": "P3",
         "text": "Jun is an experienced programmer — she has programming knowledge.",
         "type": "premise",
-        "span": [274, 313],
+        "span": [
+          274,
+          313
+        ],
         "implicit": false
       },
       {
         "id": "P4",
         "text": "Jun sat the mathematics test but did not pass it.",
         "type": "premise",
-        "span": [314, 363],
+        "span": [
+          314,
+          363
+        ],
         "implicit": false
       }
     ],
@@ -51,27 +63,50 @@
     ],
     "counter_premises": [],
     "edges": [
-      { "from": ["P1", "P3"], "to_node": "SC1", "edge_type": "supports" },
-      { "from": ["SC1", "P4"], "to_node": "C1", "edge_type": "supports" }
+      {
+        "from": [
+          "P1",
+          "P3"
+        ],
+        "to_node": "SC1",
+        "edge_type": "supports"
+      },
+      {
+        "from": [
+          "SC1",
+          "P4"
+        ],
+        "to_node": "C1",
+        "edge_type": "supports"
+      }
     ],
     "fallacies": [],
     "argument_type": "constraint_satisfaction",
     "discourse_markers": [
       {
         "marker": "If",
-        "span": [46, 48],
+        "span": [
+          44,
+          46
+        ],
         "assigned_role": "conditional_antecedent",
         "is_misleading": false
       },
       {
         "marker": "If",
-        "span": [132, 134],
+        "span": [
+          140,
+          142
+        ],
         "assigned_role": "conditional_antecedent",
         "is_misleading": false
       },
       {
         "marker": "either",
-        "span": [208, 214],
+        "span": [
+          202,
+          208
+        ],
         "assigned_role": "disjunctive_branch_marker",
         "is_misleading": false
       }

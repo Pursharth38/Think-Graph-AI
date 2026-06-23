@@ -7,14 +7,20 @@
         "id": "P1",
         "text": "Ten students from the school qualified for the state finals.",
         "type": "premise",
-        "span": [0, 78],
+        "span": [
+          0,
+          78
+        ],
         "implicit": false
       },
       {
         "id": "P2",
         "text": "Six school records were broken during the competition.",
         "type": "premise",
-        "span": [79, 133],
+        "span": [
+          79,
+          133
+        ],
         "implicit": false
       }
     ],
@@ -31,17 +37,32 @@
       "id": "C1",
       "text": "More than half (i.e. more than five) of the ten student qualifiers must be record-breakers.",
       "type": "conclusion",
-      "span": [134, 220],
+      "span": [
+        134,
+        220
+      ],
       "implicit": false
     },
     "sub_conclusions": [],
     "counter_premises": [],
     "edges": [
-      { "from": ["P1", "P2", "A1"], "to_node": "C1", "edge_type": "supports" }
+      {
+        "from": [
+          "P1",
+          "P2",
+          "A1"
+        ],
+        "to_node": "C1",
+        "edge_type": "supports"
+      }
     ],
     "fallacies": [
       {
-        "node_ids": ["P2", "A1", "C1"],
+        "node_ids": [
+          "P2",
+          "A1",
+          "C1"
+        ],
         "fallacy_type": "hasty_generalization",
         "explanation": "The argument moves from six records broken (P2) to 'more than five distinct students are record-breakers' (C1). This requires the implicit assumption A1 that each record was broken by a separate individual. In reality, one student could have broken multiple records, so as few as one student might account for all six. The count of records broken does not equal the count of distinct record-breaking students.",
         "confidence": 0.93
@@ -51,7 +72,10 @@
     "discourse_markers": [
       {
         "marker": "This shows that",
-        "span": [134, 149],
+        "span": [
+          170,
+          185
+        ],
         "assigned_role": "conclusion_marker",
         "is_misleading": false
       }
