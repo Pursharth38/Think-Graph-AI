@@ -14,6 +14,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 
 import { EdgeType, ReactFlowPayload, RFNode } from '../types/graph';
+import { LAYER_BY_TYPE } from '../lib/layout';
 import ArgumentNode from './graph/ArgumentNode';
 
 const nodeTypes = { argument: ArgumentNode };
@@ -27,15 +28,19 @@ const EDGE_STYLE: Record<EdgeType, { stroke: string; dash?: string }> = {
   undermines: { stroke: '#e8b8c4', dash: '2 4' },
 };
 
-/** Layered re-layout that centres each row over the widest row for nicer spacing. */
+/**
+ * Layered re-layout that centres each row over the widest row for nicer spacing.
+ * Rows come from the node's semantic role (LAYER_BY_TYPE), not the incoming y —
+ * so the render is independent of whatever spacing produced the payload.
+ */
 function layout(rfNodes: RFNode[]): RFNode[] {
-  const byY = new Map<number, RFNode[]>();
+  const byLayer = new Map<number, RFNode[]>();
   for (const n of rfNodes) {
-    const y = n.position.y;
-    if (!byY.has(y)) byY.set(y, []);
-    byY.get(y)!.push(n);
+    const layer = LAYER_BY_TYPE[n.data.nodeType] ?? 1;
+    if (!byLayer.has(layer)) byLayer.set(layer, []);
+    byLayer.get(layer)!.push(n);
   }
-  const rows = [...byY.entries()].sort((a, b) => a[0] - b[0]);
+  const rows = [...byLayer.entries()].sort((a, b) => a[0] - b[0]);
   const X_GAP = 300;
   // Generous row spacing so tall multi-line cards (the conclusion can run several
   // lines) never overlap the row below in flow coordinates.

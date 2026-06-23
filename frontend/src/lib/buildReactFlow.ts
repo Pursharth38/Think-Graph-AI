@@ -9,24 +9,15 @@
 import {
   ArgumentGraph,
   GraphNode,
-  NodeType,
   ReactFlowPayload,
   RFEdge,
   RFNode,
   edgeSources,
 } from '../types/graph';
+import { LAYER_BY_TYPE } from './layout';
 
 const X_SPACING = 220;
 const Y_SPACING = 140;
-
-const LAYER_BY_TYPE: Record<NodeType, number> = {
-  premise: 0,
-  counter_premise: 0,
-  assumption: 1,
-  fallacy: 1,
-  sub_conclusion: 2,
-  conclusion: 3,
-};
 
 function toRF(node: GraphNode, x: number, y: number): RFNode {
   return {
